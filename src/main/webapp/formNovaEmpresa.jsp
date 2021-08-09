@@ -3,7 +3,7 @@
     
 <%-- import de taglib core da lib jstl --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:url value="/novaEmpresa" var="linkServletNovaEmpresa"/>
+<c:url value="/entrada" var="linkFrontController"/>
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,9 @@
 	<title>Página Principal</title>
 	</head>
 	<body>
-		<form action="${linkServletNovaEmpresa}" method="POST">
+		<form action="${linkFrontController}" method="POST">
+			<input type="hidden" name="action" value="NovaEmpresa"/>
+			
 			<div>
 				<label for="nome">Nome: </label>
 				<input id="nome" type="text" name="nome">

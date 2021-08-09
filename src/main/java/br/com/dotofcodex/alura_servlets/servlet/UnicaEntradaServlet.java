@@ -8,8 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.dotofcodex.alura_servlets.action.AlteraEmpresaAction;
 import br.com.dotofcodex.alura_servlets.action.ListaEmpresaAction;
+import br.com.dotofcodex.alura_servlets.action.MostraEmpresaAction;
+import br.com.dotofcodex.alura_servlets.action.NovaEmpresaAction;
+import br.com.dotofcodex.alura_servlets.action.RemoveEmpresaAction;
 
+/**
+ * Essa classe faz o papel de Front-Controller repassando o objeto request e response para
+ * um objeto especializado, com a unica responsabilidade de fazer o processamento.
+ *
+ * @author pedro
+ *
+ */
 @WebServlet("/entrada")
 public class UnicaEntradaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,15 +29,25 @@ public class UnicaEntradaServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String webAction = request.getParameter("action");
-		if ("listarEmpresas".equals(webAction)) {
-			ListaEmpresaAction act = new ListaEmpresaAction();
-			act.executar(request, response);
+		if ("ListaEmpresas".equals(webAction)) {
+			// chama o simple factory para obter uma nova instância do objeto
+			ListaEmpresaAction.getInstance().executar(request, response);
 		}
-		else if ("RemoverEmpresa".equals(webAction)) {
-			
+		else if ("MostraEmpresa".equals(webAction)) {
+			// chama o simple factory para obter uma nova instância do objeto
+			MostraEmpresaAction.getInstance().executar(request, response);
 		}
-		else if ("MostrarEmpresa".equals(webAction)) {
-			
+		else if ("RemoveEmpresa".equals(webAction)) {
+			// chama o simple factory para obter uma nova instância do objeto
+			RemoveEmpresaAction.getInstance().executar(request, response);
+		}
+		else if ("AlteraEmpresa".equals(webAction)) {
+			// chama o simple factory para obter uma nova instância do objeto
+			AlteraEmpresaAction.getInstance().executar(request, response);
+		}
+		else if ("NovaEmpresa".equals(webAction)) {
+			// chama o simple factory para obter uma nova instância do objeto
+			NovaEmpresaAction.getInstance().executar(request, response);
 		}
 	}
 }

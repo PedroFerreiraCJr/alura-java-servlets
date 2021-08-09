@@ -8,20 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.dotofcodex.alura_servlets.datasource.Banco;
+import br.com.dotofcodex.alura_servlets.model.Empresa;
 
-public class ListaEmpresaAction implements WebAction {
-	private ListaEmpresaAction() {
+public class MostraEmpresaAction implements WebAction {
+	private MostraEmpresaAction() {
 		super();
 	}
+
 	public void executar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("list", Banco.getInstance().getEmpresas());
+		String id = request.getParameter("id");
+		Empresa empresa = Banco.getInstance().getEmpresaPorId(Long.valueOf(id));
+		request.setAttribute("empresa", empresa);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/listarEmpresa.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/formEditarEmpresa.jsp");
 		rd.forward(request, response);
 	}
-	
+
 	public static WebAction getInstance() {
-		return new ListaEmpresaAction();
+		return new MostraEmpresaAction();
 	}
 }

@@ -5,7 +5,7 @@
 <%-- import de taglib core da lib jstl --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:url value="/novaEmpresa" var="linkServletNovaEmpresa"/>
+<c:url value="/entrada" var="linkFrontController"/>
 
 <!DOCTYPE html>
 <html>
@@ -24,8 +24,8 @@
 			<c:forEach items="${list}" var="empresa">
 				<li>
 					${empresa.nome} - <fmt:formatDate value="${empresa.dataAbertura}" pattern="dd/MM/yyyy"/>
-					<a href="${linkServletNovaEmpresa}?action=editar&id=${empresa.id}">editar</a>
-					<a href="${linkServletNovaEmpresa}?action=remover&id=${empresa.id}">remover</a>
+					<a href="${linkFrontController}?action=MostraEmpresa&id=${empresa.id}">editar</a>
+					<a href="${linkFrontController}?action=RemoveEmpresa&id=${empresa.id}">remover</a>
 				</li>
 			</c:forEach>
 		</ul>

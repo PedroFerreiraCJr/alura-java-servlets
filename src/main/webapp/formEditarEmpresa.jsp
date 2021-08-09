@@ -4,7 +4,7 @@
 <%-- import de taglib core da lib jstl --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:url value="/novaEmpresa" var="linkServletNovaEmpresa"/>
+<c:url value="/entrada" var="linkFrontController"/>
 
 <!DOCTYPE html>
 <html>
@@ -13,8 +13,9 @@
 	<title>Página Principal</title>
 	</head>
 	<body>
-		<form action="${linkServletNovaEmpresa}?action=atualizar" method="POST">
+		<form action="${linkFrontController}" method="POST">
 			<input type="hidden" name="id" value="${requestScope.empresa.id}"/>
+			<input type="hidden" name="action" value="AlteraEmpresa"/>
 			
 			<div>
 				<label for="nome">Nome: </label>
