@@ -9,16 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.dotofcodex.alura_servlets.action.AlteraEmpresaAction;
-import br.com.dotofcodex.alura_servlets.action.FormNovaEmpresaAction;
-import br.com.dotofcodex.alura_servlets.action.ListaEmpresaAction;
-import br.com.dotofcodex.alura_servlets.action.MostraEmpresaAction;
-import br.com.dotofcodex.alura_servlets.action.NovaEmpresaAction;
-import br.com.dotofcodex.alura_servlets.action.RemoveEmpresaAction;
+import br.com.dotofcodex.alura_servlets.action.WebAction;
 
 /**
- * Essa classe faz o papel de Front-Controller repassando o objeto request e response para
- * um objeto especializado, com a unica responsabilidade de fazer o processamento.
+ * Essa classe faz o papel de Front-Controller repassando o objeto request e
+ * response para um objeto especializado, com a unica responsabilidade de fazer
+ * o processamento.
  *
  * @author pedro
  *
@@ -29,40 +25,48 @@ public class UnicaEntradaServlet extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String webAction = request.getParameter("action");
 		String url = null;
-		if ("ListaEmpresas".equals(webAction)) {
-			// chama o simple factory para obter uma nova instância do objeto
-			url = ListaEmpresaAction.getInstance().executar(request, response);
+
+		try {
+			Class<?> clazz = Class.forName(String.format("br.com.dotofcodex.alura_servlets.action.%sAction", webAction));
+			WebAction action = (WebAction) clazz.newInstance();
+			url = action.executar(request, response);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+			throw new ServletException(e);
 		}
-		else if ("MostraEmpresa".equals(webAction)) {
-			// chama o simple factory para obter uma nova instância do objeto
-			url = MostraEmpresaAction.getInstance().executar(request, response);
-		}
-		else if ("RemoveEmpresa".equals(webAction)) {
-			// chama o simple factory para obter uma nova instância do objeto
-			url = RemoveEmpresaAction.getInstance().executar(request, response);
-		}
-		else if ("AlteraEmpresa".equals(webAction)) {
-			// chama o simple factory para obter uma nova instância do objeto
-			url = AlteraEmpresaAction.getInstance().executar(request, response);
-		}
-		else if ("NovaEmpresa".equals(webAction)) {
-			// chama o simple factory para obter uma nova instância do objeto
-			url = NovaEmpresaAction.getInstance().executar(request, response);
-		}
-		else if ("FormNovaEmpresa".equals(webAction)) {
-			// chama o simple factory para obter uma nova instância do objeto
-			url = FormNovaEmpresaAction.getInstance().executar(request, response);
-		}
-		
+
+//		if ("ListaEmpresas".equals(webAction)) {
+//			// chama o simple factory para obter uma nova instância do objeto
+//			url = ListaEmpresaAction.getInstance().executar(request, response);
+//		}
+//		else if ("MostraEmpresa".equals(webAction)) {
+//			// chama o simple factory para obter uma nova instância do objeto
+//			url = MostraEmpresaAction.getInstance().executar(request, response);
+//		}
+//		else if ("RemoveEmpresa".equals(webAction)) {
+//			// chama o simple factory para obter uma nova instância do objeto
+//			url = RemoveEmpresaAction.getInstance().executar(request, response);
+//		}
+//		else if ("AlteraEmpresa".equals(webAction)) {
+//			// chama o simple factory para obter uma nova instância do objeto
+//			url = AlteraEmpresaAction.getInstance().executar(request, response);
+//		}
+//		else if ("NovaEmpresa".equals(webAction)) {
+//			// chama o simple factory para obter uma nova instância do objeto
+//			url = NovaEmpresaAction.getInstance().executar(request, response);
+//		}
+
+		// processa a url retornada pelo método executar de cada WebAction
 		final String[] opAndUrl = url.split("[:]");
+		// o forward vai para a JSP
 		if ("forward".equals(opAndUrl[0])) {
 			RequestDispatcher rd = request.getRequestDispatcher(String.format("WEB-INF/view/%s", opAndUrl[1]));
 			rd.forward(request, response);
-		}
-		else if ("redirect".equals(opAndUrl[0])) {
+		// o redirect é feito do lado do cliente, com o cabeçalho Location com a nova url a ser chamada
+		} else if ("redirect".equals(opAndUrl[0])) {
 			response.sendRedirect(opAndUrl[1]);
 		}
 	}
