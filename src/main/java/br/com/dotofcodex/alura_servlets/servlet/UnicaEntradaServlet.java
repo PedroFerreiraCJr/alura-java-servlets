@@ -2,6 +2,7 @@ package br.com.dotofcodex.alura_servlets.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,25 +30,35 @@ public class UnicaEntradaServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String webAction = request.getParameter("action");
+		String url = null;
 		if ("ListaEmpresas".equals(webAction)) {
 			// chama o simple factory para obter uma nova instância do objeto
-			ListaEmpresaAction.getInstance().executar(request, response);
+			url = ListaEmpresaAction.getInstance().executar(request, response);
 		}
 		else if ("MostraEmpresa".equals(webAction)) {
 			// chama o simple factory para obter uma nova instância do objeto
-			MostraEmpresaAction.getInstance().executar(request, response);
+			url = MostraEmpresaAction.getInstance().executar(request, response);
 		}
 		else if ("RemoveEmpresa".equals(webAction)) {
 			// chama o simple factory para obter uma nova instância do objeto
-			RemoveEmpresaAction.getInstance().executar(request, response);
+			url = RemoveEmpresaAction.getInstance().executar(request, response);
 		}
 		else if ("AlteraEmpresa".equals(webAction)) {
 			// chama o simple factory para obter uma nova instância do objeto
-			AlteraEmpresaAction.getInstance().executar(request, response);
+			url = AlteraEmpresaAction.getInstance().executar(request, response);
 		}
 		else if ("NovaEmpresa".equals(webAction)) {
 			// chama o simple factory para obter uma nova instância do objeto
-			NovaEmpresaAction.getInstance().executar(request, response);
+			url = NovaEmpresaAction.getInstance().executar(request, response);
+		}
+		
+		final String[] opAndUrl = url.split("[:]");
+		if ("forward".equals(opAndUrl[0])) {
+			RequestDispatcher rd = request.getRequestDispatcher(opAndUrl[1]);
+			rd.forward(request, response);
+		}
+		else if ("redirect".equals(opAndUrl[0])) {
+			response.sendRedirect(opAndUrl[1]);
 		}
 	}
 }

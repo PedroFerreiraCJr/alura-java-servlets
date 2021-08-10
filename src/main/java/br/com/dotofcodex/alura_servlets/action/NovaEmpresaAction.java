@@ -17,7 +17,7 @@ public class NovaEmpresaAction implements WebAction {
 	}
 
 	@Override
-	public void executar(HttpServletRequest request, HttpServletResponse response) 
+	public String executar(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String nomeEmpresa = request.getParameter("nome");
 		String dataAbertura = request.getParameter("data");
@@ -34,7 +34,7 @@ public class NovaEmpresaAction implements WebAction {
 
 		Banco.getInstance().adicionar(empresa);
 
-		response.sendRedirect("entrada?action=ListarEmpresas");
+		return "redirect:entrada?action=ListarEmpresas";
 	}
 
 	public static WebAction getInstance() {

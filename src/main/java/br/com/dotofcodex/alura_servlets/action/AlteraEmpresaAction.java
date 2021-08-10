@@ -16,7 +16,7 @@ public class AlteraEmpresaAction implements WebAction {
 		super();
 	}
 
-	public void executar(HttpServletRequest request, HttpServletResponse response)
+	public String executar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String idEmpresa = request.getParameter("id");
 		String nomeEmpresa = request.getParameter("nome");
@@ -35,7 +35,7 @@ public class AlteraEmpresaAction implements WebAction {
 
 		Banco.getInstance().update(empresa);
 
-		response.sendRedirect("entrada?action=ListaEmpresas");
+		return "redirect:entrada?action=ListaEmpresas";
 	}
 
 	public static WebAction getInstance() {

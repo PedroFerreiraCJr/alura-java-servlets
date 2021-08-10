@@ -14,7 +14,7 @@ public class RemoveEmpresaAction implements WebAction {
 		super();
 	}
 
-	public void executar(HttpServletRequest request, HttpServletResponse response) 
+	public String executar(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
 		Empresa empresa = Banco.getInstance().remover(Long.valueOf(id));
@@ -22,7 +22,7 @@ public class RemoveEmpresaAction implements WebAction {
 			request.setAttribute("message", "Empresa removida com sucesso!");
 		}
 
-		response.sendRedirect("entrada?action=ListarEmpresas");
+		return "redirect:entrada?action=ListarEmpresas";
 	}
 
 	public static WebAction getInstance() {
