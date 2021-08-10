@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.dotofcodex.alura_servlets.action.AlteraEmpresaAction;
+import br.com.dotofcodex.alura_servlets.action.FormNovaEmpresaAction;
 import br.com.dotofcodex.alura_servlets.action.ListaEmpresaAction;
 import br.com.dotofcodex.alura_servlets.action.MostraEmpresaAction;
 import br.com.dotofcodex.alura_servlets.action.NovaEmpresaAction;
@@ -51,10 +52,14 @@ public class UnicaEntradaServlet extends HttpServlet {
 			// chama o simple factory para obter uma nova instância do objeto
 			url = NovaEmpresaAction.getInstance().executar(request, response);
 		}
+		else if ("FormNovaEmpresa".equals(webAction)) {
+			// chama o simple factory para obter uma nova instância do objeto
+			url = FormNovaEmpresaAction.getInstance().executar(request, response);
+		}
 		
 		final String[] opAndUrl = url.split("[:]");
 		if ("forward".equals(opAndUrl[0])) {
-			RequestDispatcher rd = request.getRequestDispatcher(opAndUrl[1]);
+			RequestDispatcher rd = request.getRequestDispatcher(String.format("WEB-INF/view/%s", opAndUrl[1]));
 			rd.forward(request, response);
 		}
 		else if ("redirect".equals(opAndUrl[0])) {

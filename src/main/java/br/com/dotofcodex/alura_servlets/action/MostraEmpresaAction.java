@@ -20,7 +20,7 @@ public class MostraEmpresaAction implements WebAction {
 		Empresa empresa = Banco.getInstance().getEmpresaPorId(Long.valueOf(id));
 		request.setAttribute("empresa", empresa);
 
-		return "forward:/formEditarEmpresa.jsp";
+		return "forward:formEditarEmpresa.jsp";
 	}
 
 	public static WebAction getInstance() {
