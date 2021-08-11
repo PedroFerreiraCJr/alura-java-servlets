@@ -12,10 +12,6 @@ import br.com.dotofcodex.alura_servlets.datasource.Banco;
 import br.com.dotofcodex.alura_servlets.model.Empresa;
 
 public class AlteraEmpresaAction implements WebAction {
-	private AlteraEmpresaAction() {
-		super();
-	}
-
 	public String executar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String idEmpresa = request.getParameter("id");
@@ -36,9 +32,5 @@ public class AlteraEmpresaAction implements WebAction {
 		Banco.getInstance().update(empresa);
 
 		return "redirect:entrada?action=ListaEmpresas";
-	}
-
-	public static WebAction getInstance() {
-		return new AlteraEmpresaAction();
 	}
 }

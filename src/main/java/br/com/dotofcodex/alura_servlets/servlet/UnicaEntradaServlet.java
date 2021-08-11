@@ -16,7 +16,7 @@ import br.com.dotofcodex.alura_servlets.action.WebAction;
  * response para um objeto especializado, com a unica responsabilidade de fazer
  * o processamento.
  *
- * @author pedro
+ * @author Pedro Junior
  *
  */
 @WebServlet("/entrada")

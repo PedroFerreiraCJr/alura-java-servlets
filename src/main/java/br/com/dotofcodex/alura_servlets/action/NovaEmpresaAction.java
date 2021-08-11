@@ -12,10 +12,6 @@ import br.com.dotofcodex.alura_servlets.datasource.Banco;
 import br.com.dotofcodex.alura_servlets.model.Empresa;
 
 public class NovaEmpresaAction implements WebAction {
-	private NovaEmpresaAction() {
-		super();
-	}
-
 	@Override
 	public String executar(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
@@ -35,9 +31,5 @@ public class NovaEmpresaAction implements WebAction {
 		Banco.getInstance().adicionar(empresa);
 
 		return "redirect:entrada?action=ListarEmpresas";
-	}
-
-	public static WebAction getInstance() {
-		return new NovaEmpresaAction();
 	}
 }

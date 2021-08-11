@@ -5,15 +5,30 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.com.dotofcodex.alura_servlets.model.Empresa;
+import br.com.dotofcodex.alura_servlets.model.Usuario;
 
 public class Banco {
 
 	private static Banco instance;
 	private long nextId;
 	private List<Empresa> lista = new ArrayList<>();
+	private List<Usuario> usuarios = new ArrayList<>();
 
 	private Banco() {
 		super();
+		init();
+	}
+	
+	private void init() {
+		Usuario nico = new Usuario();
+		nico.setLogin("nico");
+		nico.setSenha("12345");
+		usuarios.add(nico);
+		
+		Usuario ana = new Usuario();
+		ana.setLogin("ana");
+		ana.setSenha("12345");
+		usuarios.add(ana);
 	}
 
 	public void adicionar(Empresa empresa) {
@@ -53,6 +68,15 @@ public class Banco {
 		for (Empresa e: this.lista) {
 			if (id.equals(e.getId())) {
 				return e;
+			}
+		}
+		return null;
+	}
+	
+	public Usuario existeUsuario(String login, String senha) {
+		for (final Usuario user: usuarios) {
+			if (user.ehIgual(login, senha)) {
+				return user;
 			}
 		}
 		return null;

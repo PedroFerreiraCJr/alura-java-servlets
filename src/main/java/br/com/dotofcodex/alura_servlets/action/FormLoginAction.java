@@ -6,12 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.dotofcodex.alura_servlets.datasource.Banco;
-
-public class ListaEmpresaAction implements WebAction {
+public class FormLoginAction implements WebAction {
+	@Override
 	public String executar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("list", Banco.getInstance().getEmpresas());
-		return "forward:listarEmpresa.jsp";
+		return "forward:formLogin.jsp";
 	}
 }
