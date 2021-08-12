@@ -7,6 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface WebAction {
-	public String executar(HttpServletRequest request, HttpServletResponse response)
+	public abstract String executar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException;
 }

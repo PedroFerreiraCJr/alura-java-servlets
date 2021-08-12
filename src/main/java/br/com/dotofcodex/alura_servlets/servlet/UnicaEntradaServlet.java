@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.com.dotofcodex.alura_servlets.action.WebAction;
 
@@ -25,10 +26,18 @@ public class UnicaEntradaServlet extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		String webAction = request.getParameter("action");
+		
+		HttpSession session = request.getSession();
+		boolean usuarioNaoEstaLogado = session.getAttribute("usuarioLogado") == null;
+		boolean eUmaWebActionProtegida = !("Login".equals(webAction) || "FormLogin".equals(webAction));
+		if (eUmaWebActionProtegida && usuarioNaoEstaLogado) {
+			response.sendRedirect("entrada?action=FormLogin");
+			return;
+		}
+		
+		
 		String url = null;
-
 		try {
 			Class<?> clazz = Class.forName(String.format("br.com.dotofcodex.alura_servlets.action.%sAction", webAction));
 			WebAction action = (WebAction) clazz.newInstance();
@@ -37,27 +46,6 @@ public class UnicaEntradaServlet extends HttpServlet {
 			e.printStackTrace();
 			throw new ServletException(e);
 		}
-
-//		if ("ListaEmpresas".equals(webAction)) {
-//			// chama o simple factory para obter uma nova instância do objeto
-//			url = ListaEmpresaAction.getInstance().executar(request, response);
-//		}
-//		else if ("MostraEmpresa".equals(webAction)) {
-//			// chama o simple factory para obter uma nova instância do objeto
-//			url = MostraEmpresaAction.getInstance().executar(request, response);
-//		}
-//		else if ("RemoveEmpresa".equals(webAction)) {
-//			// chama o simple factory para obter uma nova instância do objeto
-//			url = RemoveEmpresaAction.getInstance().executar(request, response);
-//		}
-//		else if ("AlteraEmpresa".equals(webAction)) {
-//			// chama o simple factory para obter uma nova instância do objeto
-//			url = AlteraEmpresaAction.getInstance().executar(request, response);
-//		}
-//		else if ("NovaEmpresa".equals(webAction)) {
-//			// chama o simple factory para obter uma nova instância do objeto
-//			url = NovaEmpresaAction.getInstance().executar(request, response);
-//		}
 
 		// processa a url retornada pelo método executar de cada WebAction
 		final String[] opAndUrl = url.split("[:]");

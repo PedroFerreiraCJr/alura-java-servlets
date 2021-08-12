@@ -14,6 +14,10 @@
 		<title>Listagem de Empresas</title>
 	</head>
 	<body>
+		<c:import url="./logout-fragment.jsp" />
+		<br>
+		<p>Usuário Logado: ${sessionScope.usuarioLogado.login}</p>
+		<br>		
 		<h2>Lista de Empresas Cadastradas</h2>
 		
 	 	<c:if test="${not empty requestScope.message}">
