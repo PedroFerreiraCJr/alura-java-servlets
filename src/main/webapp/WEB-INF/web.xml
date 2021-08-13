@@ -20,6 +20,39 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<!-- Monitoramento Filter -->
+	<filter>
+		<filter-name>MonitoramentoFilter</filter-name>
+		<filter-class>br.com.dotofcodex.alura_servlets.filter.MonitoramentoFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>MonitoramentoFilter</filter-name>
+		<url-pattern>/entrada</url-pattern>
+	</filter-mapping>
+
+	<!-- Autorizacao Filter -->
+	<filter>
+		<filter-name>AutorizacaoFilter</filter-name>
+		<filter-class>br.com.dotofcodex.alura_servlets.filter.AutorizacaoFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>AutorizacaoFilter</filter-name>
+		<url-pattern>/entrada</url-pattern>
+	</filter-mapping>
+
+	<!-- Controlador Filter -->
+	<filter>
+		<filter-name>ControladorFilter</filter-name>
+		<filter-class>br.com.dotofcodex.alura_servlets.filter.ControladorFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>ControladorFilter</filter-name>
+		<url-pattern>/entrada</url-pattern>
+	</filter-mapping>
+
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>

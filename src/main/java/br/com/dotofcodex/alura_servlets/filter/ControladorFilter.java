@@ -1,30 +1,26 @@
-package br.com.dotofcodex.alura_servlets.servlet;
+package br.com.dotofcodex.alura_servlets.filter;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.dotofcodex.alura_servlets.action.WebAction;
 
-/**
- * Essa classe faz o papel de Front-Controller repassando o objeto request e
- * response para um objeto especializado, com a unica responsabilidade de fazer
- * o processamento.
- *
- * @author Pedro Junior
- *
- */
-//@WebServlet("/entrada")
-@Deprecated
-public class UnicaEntradaServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class ControladorFilter implements Filter {
 
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletResponse response = (HttpServletResponse) servletResponse;
+
 		String webAction = request.getParameter("action");
 		String url = null;
 		try {
