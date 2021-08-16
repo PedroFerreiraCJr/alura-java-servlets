@@ -24,8 +24,8 @@ public class EmpresaService extends HttpServlet {
 			throws ServletException, IOException {
 		List<Empresa> empresas = Banco.getInstance().getEmpresas();
 
-		String type = request.getParameter("type");
-		if (type == null || "json".equals(type)) {
+		String type = request.getHeader("Accept");
+		if (type == null || "application/json".equals(type)) {
 			Gson gson = new Gson();
 			String json = gson.toJson(empresas);
 
